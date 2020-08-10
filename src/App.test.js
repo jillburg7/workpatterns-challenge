@@ -61,6 +61,8 @@ describe('items reducer', () => {
         uuid: '1234',
         complete: false,
         text: '',
+        dateCompleted: null,
+        subItems: [],
       }
     })).toEqual([
       {},
@@ -68,6 +70,8 @@ describe('items reducer', () => {
         uuid: '1234',
         complete: false,
         text: '',
+        dateCompleted: null,
+        subItems: [],
       }
     ])
   })
@@ -78,6 +82,7 @@ describe('items reducer', () => {
       complete: false,
       text: '',
       dateCompleted: null,
+      subItems: [],
     }], {
       type: 'UPDATE_ITEM',
       payload: {
@@ -93,6 +98,7 @@ describe('items reducer', () => {
         complete: true,
         text: 'help me',
         dateCompleted: 1572393600000,
+        subItems: [],
       }
     ])
   })
@@ -105,12 +111,169 @@ describe('items reducer', () => {
         uuid: '1234',
         complete: false,
         text: '',
+        dateCompleted: null,
+        subItems: [],
       }
     ], {
       type: 'DELETE_ITEM',
       payload: '1234',
     })).toEqual([
       {}
+    ])
+  })
+
+  it('should handle ADD_SUB_ITEM', () => {
+    expect(items([{
+      uuid: '1234',
+      complete: false,
+      text: '',
+      dateCompleted: null,
+      subItems: [],
+    }], {
+      type: 'ADD_SUB_ITEM',
+      payload: {
+        uuid: '1234',
+        subItem: {
+          uuid: '5678',
+          complete: false,
+          text: '',
+        }
+      }
+    })).toEqual([
+      {
+        uuid: '1234',
+        complete: false,
+        text: '',
+        dateCompleted: null,
+        subItems: [{
+          uuid: '5678',
+          complete: false,
+          text: '',
+        }],
+      }
+    ])
+  })
+
+  it('should handle UPDATE_ITEM when completing parent topics', () => {
+    expect(items([{
+      uuid: '1234',
+      complete: false,
+      text: '',
+      dateCompleted: null,
+      subItems: [{
+        uuid: '5678',
+        complete: false,
+        text: 'subtopic 1',
+      },{
+        uuid: '9876',
+        complete: false,
+        text: 'subtopic 2',
+      }],
+    }], {
+      type: 'UPDATE_ITEM',
+      payload: {
+        uuid: '1234',
+        updatedItem: {
+          complete: true,
+          text: 'help me',
+        }
+      }
+    })).toEqual([
+      {
+        uuid: '1234',
+        complete: true,
+        text: 'help me',
+        dateCompleted: 1572393600000,
+        subItems: [{
+          uuid: '5678',
+          complete: true,
+          text: 'subtopic 1',
+        },{
+          uuid: '9876',
+          complete: true,
+          text: 'subtopic 2',
+        }],
+      }
+    ])
+  })
+
+  it('should handle UPDATE_SUB_ITEM', () => {
+    expect(items([{
+      uuid: '1234',
+      complete: false,
+      text: 'topic 1',
+      dateCompleted: null,
+      subItems: [{
+        uuid: '5678',
+        complete: false,
+        text: '',
+      }],
+    }], {
+      type: 'UPDATE_SUB_ITEM',
+      payload: {
+        uuid: '1234',
+        updatedSubItem: {
+          uuid: '5678',
+          complete: false,
+          text: 'subtopic 1',
+        }
+      }
+    })).toEqual([
+      {
+        uuid: '1234',
+        complete: false,
+        text: 'topic 1',
+        dateCompleted: null,
+        subItems: [{
+          uuid: '5678',
+          complete: false,
+          text: 'subtopic 1',
+        }],
+      }
+    ])
+  })
+
+  it('should handle UPDATE_SUB_ITEM when un-completing sub-topics', () => {
+    expect(items([{
+      uuid: '1234',
+      complete: true,
+      text: 'topic 1',
+      dateCompleted: 1572393600000,
+      subItems: [{
+        uuid: '5678',
+        complete: true,
+        text: 'subtopic 1',
+      },{
+        uuid: '9876',
+        complete: true,
+        text: 'subtopic 2',
+      }],
+    }], {
+      type: 'UPDATE_SUB_ITEM',
+      payload: {
+        uuid: '1234',
+        updatedSubItem: {
+          uuid: '5678',
+          complete: false,
+          text: 'subtopic 1',
+        }
+      }
+    })).toEqual([
+      {
+        uuid: '1234',
+        complete: false,
+        text: 'topic 1',
+        dateCompleted: null,
+        subItems: [{
+          uuid: '5678',
+          complete: false,
+          text: 'subtopic 1',
+        },{
+          uuid: '9876',
+          complete: true,
+          text: 'subtopic 2',
+        }]
+      }
     ])
   })
 

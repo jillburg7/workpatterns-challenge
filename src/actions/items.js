@@ -12,6 +12,7 @@ export const addItem = () => ({
     complete: false,
     text: "",
     dateCompleted: null,
+    subItems: [],
   }
 })
 
@@ -26,4 +27,24 @@ export const updateItem = (uuid, updatedItem) => ({
 export const deleteItem = (uuid) => ({
   type: 'DELETE_ITEM',
   payload: uuid
+})
+
+export const addSubItem = (uuid) => ({
+  type: 'ADD_SUB_ITEM',
+  payload: {
+    uuid,
+    subItem: {
+      uuid: uuid(),
+      complete: false,
+      text: "",
+    }
+  }
+})
+
+export const updateSubItem = (uuid, updatedSubItem) => ({
+  type: 'UPDATE_SUB_ITEM',
+  payload: {
+    uuid,
+    updatedSubItem
+  }
 })
