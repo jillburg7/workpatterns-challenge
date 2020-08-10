@@ -1,10 +1,10 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import { BsCheck } from "react-icons/bs";
+import { BsCheck, BsTrash } from "react-icons/bs";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const Item = ({ item, onCompleteClick, onItemTextChange }) => (
+const Item = ({ item, onCompleteClick, onItemTextChange, onDeleteClick }) => (
   <Row className="mt-3 bg-white">
     <Col>
       <input
@@ -22,6 +22,15 @@ const Item = ({ item, onCompleteClick, onItemTextChange }) => (
         data-testid="complete-button"
       >
         <BsCheck />
+      </Button>
+    </Col>
+    <Col md="auto">
+      <Button
+        onClick={() => onDeleteClick(item.uuid)}
+        variant="danger"
+        data-testid="delete-button"
+      >
+        <BsTrash />
       </Button>
     </Col>
   </Row>

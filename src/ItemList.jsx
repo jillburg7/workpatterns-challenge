@@ -3,7 +3,7 @@ import Item from './Item.jsx';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-const ItemList = ({ items, onCompleteClick, onItemTextChange }) => {
+const ItemList = ({ items, onCompleteClick, onItemTextChange, onDeleteClick }) => {
   return (<>
     {items.length === 0 && (
       <Row className="p-4 text-center">
@@ -13,7 +13,7 @@ const ItemList = ({ items, onCompleteClick, onItemTextChange }) => {
       </Row>
     )}
     {items.map((item) => (
-      <Item key={item.uuid} item={item} onCompleteClick={onCompleteClick} onItemTextChange={onItemTextChange} />
+      <Item key={item.uuid} item={item} onCompleteClick={onCompleteClick} onItemTextChange={onItemTextChange} onDeleteClick={onDeleteClick} />
     ))}
   </>);
 };

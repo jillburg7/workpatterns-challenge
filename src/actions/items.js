@@ -21,3 +21,8 @@ export const updateItem = (uuid, updatedItem) => ({
     updatedItem,
   }
 });
+
+export const deleteItem = (uuid) => ({
+  type: 'DELETE_ITEM',
+  payload: uuid
+})

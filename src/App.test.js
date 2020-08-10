@@ -29,6 +29,22 @@ it('should call onCompleteClick if item is completed', () => {
   expect(mockOnCompleteClick).toHaveBeenCalledWith('1234', true)
 })
 
+it('should call onCompleteClick if item is un-completed', () => {
+  // const mockOnItemTextChange = jest.fn()
+  const mockOnCompleteClick = jest.fn()
+  render(<Item item={{uuid: '1234', complete: true, text: ''}} onCompleteClick={mockOnCompleteClick} />)
+  fireEvent.click(screen.getByTestId('complete-button'), { button: 1 })
+  expect(mockOnCompleteClick).toHaveBeenCalledWith('1234', false)
+})
+
+it('should call onDeleteClick if item is deleted', () => {
+  // const mockOnItemTextChange = jest.fn()
+  const mockOnDeleteClick = jest.fn()
+  render(<Item item={{uuid: '1234', complete: true, text: ''}} onDeleteClick={mockOnDeleteClick} />)
+  fireEvent.click(screen.getByTestId('delete-button'), { button: 1 })
+  expect(mockOnDeleteClick).toHaveBeenCalledWith('1234')
+})
+
 describe('items reducer', () => {
   it('should return the initial state', () => {
     expect(items(undefined, {})).toEqual([])
@@ -74,4 +90,22 @@ describe('items reducer', () => {
       }
     ])
   })
+
+
+  it('should handle DELETE_ITEM', () => {
+    expect(items([
+      {},
+      {
+        uuid: '1234',
+        complete: false,
+        text: '',
+      }
+    ], {
+      type: 'DELETE_ITEM',
+      payload: '1234',
+    })).toEqual([
+      {}
+    ])
+  })
+
 })

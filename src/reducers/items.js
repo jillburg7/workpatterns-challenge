@@ -16,6 +16,8 @@ export default function items(state = [], action) {
 
         return item;
       });
+    case 'DELETE_ITEM':
+      return state.filter(item => item.uuid !== action.payload)
     default:
       return state;
   }
