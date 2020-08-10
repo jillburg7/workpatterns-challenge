@@ -11,6 +11,7 @@ export const addItem = () => ({
     uuid: uuid(),
     complete: false,
     text: "",
+    dateCompleted: null,
   }
 })
 

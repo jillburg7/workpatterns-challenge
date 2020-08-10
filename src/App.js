@@ -28,7 +28,7 @@ const App = () => {
       </Container>
 
       <Container className="bg-white px-4 py-3 rounded shadow-lg">
-        <ItemList items={items.filter(item => item.complete)} onCompleteClick={onCompleteClick} onItemTextChange={onItemTextChange} onDeleteClick={onDeleteClick} />
+        <ItemList items={items.filter(item => item.complete).sort((a,b) => b.dateCompleted - a.dateCompleted)} onCompleteClick={onCompleteClick} onItemTextChange={onItemTextChange} onDeleteClick={onDeleteClick} />
       </Container>
     </div>
   );

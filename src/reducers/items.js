@@ -11,6 +11,7 @@ export default function items(state = [], action) {
           return {
             ...item,
             ...action.payload.updatedItem,
+            dateCompleted: action.payload.updatedItem.complete ? Date.now() : null
           }
         }
 

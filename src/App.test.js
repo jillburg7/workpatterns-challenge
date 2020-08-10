@@ -46,6 +46,10 @@ it('should call onDeleteClick if item is deleted', () => {
 })
 
 describe('items reducer', () => {
+  beforeEach(() => {
+    Date.now = jest.fn(() => 1572393600000); // 2019-10-30T00:00Z0 (GMT)
+  });
+  
   it('should return the initial state', () => {
     expect(items(undefined, {})).toEqual([])
   })
@@ -73,6 +77,7 @@ describe('items reducer', () => {
       uuid: '1234',
       complete: false,
       text: '',
+      dateCompleted: null,
     }], {
       type: 'UPDATE_ITEM',
       payload: {
@@ -87,6 +92,7 @@ describe('items reducer', () => {
         uuid: '1234',
         complete: true,
         text: 'help me',
+        dateCompleted: 1572393600000,
       }
     ])
   })
