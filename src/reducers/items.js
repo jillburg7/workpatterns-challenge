@@ -12,8 +12,21 @@ export default function items(state = [], action) {
           return {
             ...item,
             ...action.payload.updatedItem,
-            dateCompleted: action.payload.updatedItem.complete ? Date.now() : null,
-            subItems: item.subItems.map(subItem => ({...subItem, complete: action.payload.updatedItem.complete}))
+            active: Boolean(action.payload.updatedItem.text),
+          }
+        }
+
+        return item;
+      });
+
+    case 'TOGGLE_ITEM':
+      return state.map((item) => {
+        if (action.payload.uuid === item.uuid) {
+          return {
+            ...item,
+            complete: action.payload.complete,
+            dateCompleted: action.payload.complete ? Date.now() : null,
+            subItems: item.subItems.map(subItem => ({...subItem, complete: action.payload.complete})).filter(sub => sub.active)
           }
         }
 
@@ -25,9 +38,10 @@ export default function items(state = [], action) {
 
     case 'ADD_SUB_ITEM':
       return state.map(item => {
-        if (action.payload.uuid === item.uuid) {
+        if (action.payload.parentUuid === item.uuid) {
           return {
             ...item,
+            uuid: action.payload.parentUuid,
             subItems: [...item.subItems, action.payload.subItem]
           }
         }
@@ -37,17 +51,49 @@ export default function items(state = [], action) {
 
     case 'UPDATE_SUB_ITEM':
       return state.map(item => {
-        if (action.payload.uuid === item.uuid) {
-          // TODO: is the dateCompleted fucked up due to logic??
+        if (action.payload.parentUuid === item.uuid) {
           return {
             ...item,
-            complete: item.complete && action.payload.updatedSubItem.complete,
-            dateCompleted: item.complete && action.payload.updatedSubItem.complete ? Date.now() : null,
+            subItems: item.subItems.map(subItem => {
+              if (action.payload.updatedSubItem.uuid === subItem.uuid)
+                return {
+                  ...subItem, 
+                  ...action.payload.updatedSubItem,
+                  active: Boolean(action.payload.updatedSubItem.text)
+                }
+              return subItem
+            })
+          }
+        }
+
+        return item
+      })
+
+    case 'TOGGLE_SUB_ITEM':
+      return state.map(item => {
+        if (action.payload.parentUuid === item.uuid) {
+          let isItemComplete = action.payload.updatedSubItem.complete && (item.subItems.filter(subItem => !subItem.complete).length === 1)
+          return {
+            ...item,
+            complete: isItemComplete,
+            dateCompleted: isItemComplete ? Date.now() : null,
             subItems: item.subItems.map(subItem => {
               if (action.payload.updatedSubItem.uuid === subItem.uuid)
                 return {...subItem, ...action.payload.updatedSubItem}
               return subItem
             })
+          }
+        }
+
+        return item
+      })
+      
+    case 'DELETE_SUB_ITEM':
+      return state.map(item => {
+        if (action.payload.parentUuid === item.uuid) {
+          return {
+            ...item,
+            subItems: item.subItems.filter(subItem => subItem.uuid !== action.payload.subItemUuid)
           }
         }
 

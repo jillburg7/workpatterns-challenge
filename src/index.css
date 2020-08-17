@@ -15,6 +15,15 @@ body {
   border-color: #0238BB;
 }
 
+.btn-outline-primary {
+  color: #0238BB;
+  border-color: #0238BB;
+}
+
+a {
+  color: #0238BB;
+}
+
 .App {
   max-width: 600px;
   margin: 5rem auto 0;

@@ -3,11 +3,13 @@ import Button from "react-bootstrap/Button";
 import { BsCheck, BsTrash } from "react-icons/bs";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Form from 'react-bootstrap/Form'
 
 const Item = ({ item, onCompleteClick, onItemTextChange, onDeleteClick }) => (
   <Row className="mt-3 bg-white">
     <Col>
-      <input
+      <Form.Control
+        readOnly={item.complete}
         type="text"
         className="form-control"
         placeholder="Enter text here"
@@ -18,6 +20,7 @@ const Item = ({ item, onCompleteClick, onItemTextChange, onDeleteClick }) => (
     <Col md="auto">
       <Button
         onClick={() => onCompleteClick(item.uuid, !item.complete)}
+        disabled={!item.active}
         variant={item.complete ? "success" : "secondary"}
         data-testid="complete-button"
       >

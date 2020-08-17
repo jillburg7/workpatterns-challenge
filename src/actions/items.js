@@ -11,6 +11,7 @@ export const addItem = () => ({
     uuid: uuid(),
     complete: false,
     text: "",
+    active: false,
     dateCompleted: null,
     subItems: [],
   }
@@ -24,27 +25,52 @@ export const updateItem = (uuid, updatedItem) => ({
   }
 });
 
+export const toggleItem = (uuid, complete) => ({
+  type: 'TOGGLE_ITEM',
+  payload: {
+    uuid,
+    complete
+  }
+})
+
 export const deleteItem = (uuid) => ({
   type: 'DELETE_ITEM',
   payload: uuid
 })
 
-export const addSubItem = (uuid) => ({
+export const addSubItem = (parentUuid) => ({
   type: 'ADD_SUB_ITEM',
   payload: {
-    uuid,
+    parentUuid,
     subItem: {
       uuid: uuid(),
       complete: false,
       text: "",
+      active: false,
     }
   }
 })
 
-export const updateSubItem = (uuid, updatedSubItem) => ({
+export const updateSubItem = (parentUuid, updatedSubItem) => ({
   type: 'UPDATE_SUB_ITEM',
   payload: {
-    uuid,
+    parentUuid,
     updatedSubItem
+  }
+})
+
+export const toggleSubItem = (parentUuid, updatedSubItem) => ({
+  type: 'TOGGLE_SUB_ITEM',
+  payload: {
+    parentUuid,
+    updatedSubItem
+  }
+})
+
+export const deleteSubItem = (parentUuid, subItemUuid) => ({
+  type: 'DELETE_SUB_ITEM',
+  payload: {
+    parentUuid, 
+    subItemUuid
   }
 })
