@@ -2,6 +2,14 @@
 
 My solution covers all of the problem statement's requirements mentioned below. Admittedly, I will say that displaying and handling sub-topic state seems a bit clunky.
 
+### Other things to note
+
+1. Updated and added more tests.
+2. Added `prop-types` library typechecking props for individual components.
+3. Topics must have a non-empty `text` value to add sub-topics to it or mark it as completed.
+4. Any sub-topic with an empty `text` value will be removed from the parent topic if their parent topic is marked as completed, thus making all non-empty sub-topics also completed.
+5. Topics and sub-topics can be deleted at any time, regardless of their status (complete/un-complete) or `text` value.
+6. Topics and sub-topics will become read-only when marked as completed.
 
 ## Problem Statement
 
