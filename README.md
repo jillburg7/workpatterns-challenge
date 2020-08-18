@@ -1,8 +1,7 @@
 ## WorkPatterns Technical Challenge
 
-Thanks for doing the WorkPatterns Challenge! The challenge consists of a simple app to which you'll add new functionality. There is no strict deadline for this challenge. The goal of this challenge is to assess your code quality, attention to detail & overall problem-solving ability.
+My solution covers all of the problem statement's requirements mentioned below. Admittedly, I will say that displaying and handling sub-topic state seems a bit clunky.
 
-Please *clone* the repository with your solution to the challenge and email dmitri@workpatterns.com a link. We do not recommend forking this repo.
 
 ## Problem Statement
 
