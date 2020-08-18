@@ -11,7 +11,7 @@ const addItemPropTypes = {
 };
 
 const AddItemButton = ({ onAddItem, children, variant = "primary" }) => (
-  <Button onClick={() => onAddItem()} className="mt-3" variant={variant}>
+  <Button onClick={() => onAddItem()} className="mt-3" variant={variant} data-testid="add-button">
     <BsPlus/> {children}
   </Button>
 );
